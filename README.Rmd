@@ -1,0 +1,65 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%",
+  eval = TRUE
+)
+options(width = 100)
+polcom <- tidyversity::polcom
+```
+# tidycor <img src="man/figures/logo.png" width="160px" align="right" /> 
+
+[![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+
+🎓 Tidy tools for academics
+
+
+## \*\*\* This package is in very early development. Feedback is encouraged!!! \*\*\*
+
+## Installation
+
+<!-- You can install the released version of tidycor from [CRAN](https://CRAN.R-project.org) with:
+
+``` r
+install.packages("tidycor")
+```
+-->
+
+Install the development version from [Github](https://github.com/mkearney/tidycor) with:
+
+```{r install, eval=FALSE}
+## install devtools if not already
+if (!requireNamespace("devtools", quietly = TRUE)) {
+  install.packages("devtools")
+}
+## install tidycor from Github
+devtools::install_github("mkearney/tidycor")
+```
+
+Load the package (it, of course, plays nicely with tidyverse).
+
+```{r library}
+## load tidyverse
+library(tidyverse)
+
+## load tidycor
+library(tidycor)
+```
+
+## Reliability
+
+Estimate Cronbach's alpha for a set of variables.
+
+```{r reliability}
+## reliability of social media use items
+cronbachs_alpha(polcom, ambiv_sexism_1:ambiv_sexism_6)
+```
+
