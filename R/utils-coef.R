@@ -16,7 +16,7 @@ add_std_est <- function(d, m) {
   ## if the standardized solution worked, append the stardardized estimates
   ## otherwise return NA vector
   if (!is.null(s)) {
-    s <- tibble::as_tibble(broom::tidy(s), validate = FALSE)
+    s <- tibble::as_tibble(broom::tidy(s))
     if (nrow(d) > nrow(s)) {
       d$std.est <- c(0, s[[2]])
     } else {

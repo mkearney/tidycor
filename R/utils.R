@@ -14,14 +14,10 @@ NULL
 #' Convert object to tibble
 #'
 #' @inheritParams tibble::as_tibble
-#' @param validate Logical, indicating whether to validate data frame.
-#'   Defaults to \code{FALSE} because validation, while probably offering more
-#'   safety and consistency, also provides a noticeable slow down in
-#'   performance.
 #' @return A tibble, class \code{c("tbl_df", "tbl", "data.frame")}
 #' @export
-as_tbl <- function(x, ..., validate = FALSE) {
-  tibble::as_tibble(x, ..., validate = FALSE)
+as_tbl <- function(x, ...) {
+  tibble::as_tibble(x, ...)
 }
 
 #' Create a tibble data frame

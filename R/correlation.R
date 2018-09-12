@@ -5,7 +5,7 @@
 #' @param e1 Input 1
 #' @param e2 Input 2
 #' @param env Environment
-#' @importFrom rlang `!!`
+#' @importFrom rlang !!
 #' @export
 `%~~%` <- function(e1, e2, env = NULL) {
   if (rlang::is_closure(e1)) {
@@ -16,6 +16,7 @@
   } else if (is.character(e1)) {
     a <- e1
   } else {
+    #a <- e1
     a <- as.character(substitute(e1))
   }
   if (rlang::is_closure(e2)) {
@@ -26,6 +27,7 @@
   } else if (is.character(e2)) {
     b <- e2
   } else {
+    #b <- e2
     b <- as.character(substitute(e2))
   }
   formula <- paste(c(a, b), collapse = " + ")
@@ -47,6 +49,7 @@
 #' Correlation method
 #'
 #' Conducts correlation analysis
+#' @export
 correlation <- function(x, ...) UseMethod("correlation")
 
 #' @export
@@ -178,5 +181,36 @@ is_correlation <- function(x) inherits(x, "correlation")
 `+.correlation` <- function(e1, e2) {
   b <- as.character(substitute(e2))
   as_correlation(e1, b)
+}
+
+
+`%~~~%` <- function(lhs, rhs, env = parent.frame()) {
+  lhs <- rlang::enquo(lhs)
+  rhs <- rlang::enquo(rhs)
+  v1 <- as.character(lhs)[2]
+  v2 <- as.character(rhs)[2]
+  lhs <- rlang::eval_tidy(lhs)
+  if (NCOL(lhs) > 1) {
+    v1 <- names(lhs)
+  }
+  rhs <- rlang::eval_tidy(rhs)
+  if (NCOL(rhs) > 1) {
+    v2 <- names(rhs)
+  }
+  if (identical(v1, v2)) {
+    x <- cor(lhs, use = "pairwise.complete.obs")
+    x <- as.data.frame(x)
+  } else {
+    x <- cor(lhs, rhs, use = "pairwise.complete.obs")
+    x <- as.data.frame(x)
+  }
+  cors <- unique(apply(combn(c(v1, v2), 2), 2, paste0, collapse = "~~"))
+  cors <- strsplit(cors, "~~")
+  xx <- sapply(cors, function(.x) .x[[1]])
+  yy <- sapply(cors, function(.x) .x[[2]])
+  x <- unlist(lapply(x, unlist))
+  df <- data.frame(x = xx, y = yy, r = x, stringsAsFactors = FALSE,
+    row.names = NULL, check.rows = FALSE, check.names = FALSE)
+  tibble::as_tibble(df)
 }
 

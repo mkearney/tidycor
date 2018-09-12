@@ -4,17 +4,12 @@
 \alias{as_tbl}
 \title{Convert object to tibble}
 \usage{
-as_tbl(x, ..., validate = FALSE)
+as_tbl(x, ...)
 }
 \arguments{
-\item{x}{A list. Each element of the list must have the same length.}
+\item{x}{A vector, list, or matrix. If a list, each element must have the same length.}
 
 \item{...}{Other arguments passed on to individual methods.}
-
-\item{validate}{Logical, indicating whether to validate data frame.
-Defaults to \code{FALSE} because validation, while probably offering more
-safety and consistency, also provides a noticeable slow down in
-performance.}
 }
 \value{
 A tibble, class \code{c("tbl_df", "tbl", "data.frame")}
